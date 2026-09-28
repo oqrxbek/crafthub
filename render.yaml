@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: crafthub
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: RUN_MODE
+        value: webhook
+      - key: BOT_USERNAME
+        value: crafthubot
+      - key: OPENAI_MODEL
+        value: gpt-5.5
+      - key: AI_DAILY_LIMIT
+        value: "50"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: BOT_TOKEN
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: crafthub-db
+          property: connectionString
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: BASE_URL
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+databases:
+  - name: crafthub-db
+    plan: free
+    databaseName: crafthub
+    user: crafthub
