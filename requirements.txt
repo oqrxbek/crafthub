@@ -7,3 +7,4 @@ asyncpg==0.30.0
 openai==1.106.1
 itsdangerous==2.2.0
 python-multipart==0.0.20
+greenlet==3.5.6
